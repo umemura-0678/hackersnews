@@ -3,16 +3,14 @@ import time
 
 new_id_list = requests.get("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty").json()
 #print(new_id_list)
-for i in range(30):
+for i in range(50):
     # データ取得
     data = requests.get(f"https://hacker-news.firebaseio.com/v0/item/{new_id_list[i]}.json?print=pretty" ).json()
-    try:
-        data["url"]
-    except Exception as e:
+    if data.get("url") is None:
         data["url"]="None"
-    finally:
-        dict = {"title":data["title"],"link": data["url"]}
-        print(dict)
+    
+    result_dict = {"title":data["title"],"link": data["url"]}
+    print(result_dict)
         
     time.sleep(1)
 
